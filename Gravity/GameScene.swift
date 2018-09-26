@@ -107,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func getRandomRocketPosition() -> CGPoint {
-        let random = CGPoint.random(minX: -300, maxX: 0, minY: -300, maxY: 0)
+        let random = CGPoint.random(minX: -480, maxX: 0, minY: -320, maxY: 0)
         if (pow(random.x, 2) + pow(random.y, 2)) < pow(150, 2) {
             return getRandomRocketPosition()
         } else {
@@ -191,7 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func restartGame() {
-        self.removeAllChildren()
+        self.removeChildren()
         outOfBoundsDate = nil
         haveBeenImpulsed = false
         
@@ -285,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func removeAllChildren() {
+    func removeChildren() {
         var childrenToRemove = [SKNode]()
         for node in children {
             if node.name != "background music" {
