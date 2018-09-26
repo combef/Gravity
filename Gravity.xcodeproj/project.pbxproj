@@ -8,18 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		0F8EB16D215A676D00DEBF52 /* interstellar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EB16B215A676D00DEBF52 /* interstellar.mp3 */; };
-		0F8EB16E215A676D00DEBF52 /* mariachi.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0F8EB16C215A676D00DEBF52 /* mariachi.wav */; };
 		0F9EC6DF214FBDE2009F5E74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9EC6DE214FBDE2009F5E74 /* AppDelegate.swift */; };
 		0F9EC6E1214FBDE2009F5E74 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EC6E0214FBDE2009F5E74 /* GameScene.sks */; };
 		0F9EC6E5214FBDE2009F5E74 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9EC6E4214FBDE2009F5E74 /* GameScene.swift */; };
 		0F9EC6E7214FBDE2009F5E74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9EC6E6214FBDE2009F5E74 /* ViewController.swift */; };
 		0F9EC6E9214FBDE4009F5E74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EC6E8214FBDE4009F5E74 /* Assets.xcassets */; };
 		0F9EC6EC214FBDE4009F5E74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EC6EA214FBDE4009F5E74 /* Main.storyboard */; };
+		0FC89A08215BBA1900B8E7FC /* mariachi.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0FC89A07215BBA1900B8E7FC /* mariachi.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0F8EB16B215A676D00DEBF52 /* interstellar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = interstellar.mp3; sourceTree = "<group>"; };
-		0F8EB16C215A676D00DEBF52 /* mariachi.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mariachi.wav; sourceTree = "<group>"; };
 		0F9EC6DB214FBDE2009F5E74 /* Gravity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gravity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F9EC6DE214FBDE2009F5E74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F9EC6E0214FBDE2009F5E74 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -29,6 +28,7 @@
 		0F9EC6EB214FBDE4009F5E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0F9EC6ED214FBDE4009F5E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F9EC6EE214FBDE4009F5E74 /* Gravity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gravity.entitlements; sourceTree = "<group>"; };
+		0FC89A07215BBA1900B8E7FC /* mariachi.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mariachi.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				0F8EB16B215A676D00DEBF52 /* interstellar.mp3 */,
-				0F8EB16C215A676D00DEBF52 /* mariachi.wav */,
+				0FC89A07215BBA1900B8E7FC /* mariachi.wav */,
 			);
 			name = Sounds;
 			path = "New Group";
@@ -144,7 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F9EC6E1214FBDE2009F5E74 /* GameScene.sks in Resources */,
-				0F8EB16E215A676D00DEBF52 /* mariachi.wav in Resources */,
+				0FC89A08215BBA1900B8E7FC /* mariachi.wav in Resources */,
 				0F9EC6E9214FBDE4009F5E74 /* Assets.xcassets in Resources */,
 				0F9EC6EC214FBDE4009F5E74 /* Main.storyboard in Resources */,
 				0F8EB16D215A676D00DEBF52 /* interstellar.mp3 in Resources */,
