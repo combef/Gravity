@@ -24,26 +24,21 @@ struct Constants {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var rocketSprite: SKSpriteNode!
-    var planetSprite: SKSpriteNode!
-    var gravityField: SKFieldNode!
-    var cheeseSprite: SKSpriteNode!
-    var angleLabel: SKLabelNode!
-    var powerLabel: SKLabelNode!
+    var rocketSprite = SKSpriteNode()
+    var planetSprite = SKSpriteNode()
+    var gravityField = SKFieldNode()
+    var cheeseSprite = SKSpriteNode()
+    var angleLabel = SKLabelNode()
+    var powerLabel = SKLabelNode()
     
-    var backgroundMusic: SKAudioNode!
+    var backgroundMusic = SKAudioNode()
     
-    lazy var rocketInitPosition = getRandomRocketPosition()
-    lazy var cheeseInitPosition = getRandomCheesePosition()
+    var rocketInitPosition: CGPoint!
+    var cheeseInitPosition: CGPoint!
     
     override func sceneDidLoad() {
         physicsWorld.contactDelegate = self
-        setupRocket()
-        setupPlanet()
-        setupCheese()
-        setupGravity()
-        setupLabels()
-        setupBackgroundMusic()
+        startAnotherGame()
     }
     
     func setupRocket() {
@@ -107,6 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setupBackgroundMusic() {
         backgroundMusic = SKAudioNode(url: URL(string: Bundle.main.path(forResource: "interstellar", ofType: "mp3")!)!)
+        backgroundMusic.name = "background music"
         addChild(backgroundMusic)
     }
     
@@ -121,7 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func getRandomCheesePosition() -> CGPoint {
-        let axis = CGLine(xCoefficient: rocketSprite.position.x, yCoefficient: rocketSprite.position.y, offset: 0)
+        let axis = CGLine(xCoefficient: rocketInitPosition.x, yCoefficient: rocketInitPosition.y, offset: 0)
         let random = CGFloat.random(in: 0..<250)
         let point = CGPoint(x: 150 + cos(axis.yCoefficient / axis.xCoefficient) * random, y: 150 + sin(axis.xCoefficient / axis.yCoefficient) * random)
         return point
@@ -168,6 +164,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(changeLevelLabel)
     }
     
+    var labelsAreVisible: Bool {
+        if childNode(withName: "retry label") != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func showVictoryLabel() {
         let label = SKLabelNode(text: Constants.victoryText)
         label.fontSize = Constants.victoryFontSize
@@ -182,16 +186,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    var backgroundMusicIsPlaying: Bool {
+        return backgroundMusic.parent != nil
+    }
+    
     func restartGame() {
         self.removeAllChildren()
-        self.sceneDidLoad()
         outOfBoundsDate = nil
         haveBeenImpulsed = false
+        
+        setupRocket()
+        setupPlanet()
+        setupCheese()
+        setupGravity()
+        setupLabels()
+        if !backgroundMusicIsPlaying {
+            setupBackgroundMusic()
+        }
     }
     
     func startAnotherGame() {
-        rocketSprite.position = getRandomRocketPosition()
-        cheeseSprite.position = getRandomCheesePosition()
+        rocketInitPosition = getRandomRocketPosition()
+        cheeseInitPosition = getRandomCheesePosition()
         restartGame()
     }
     
@@ -250,13 +266,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var outOfBoundsDate: Date?
-    var labelsAreVisible: Bool {
-        if self.childNode(withName: "retry label") != nil {
-            return true
-        } else {
-            return false
-        }
-    }
     
     override func update(_ currentTime: TimeInterval) {
         if let velocity = rocketSprite.physicsBody?.velocity, velocity.dx != 0, velocity.dy != 0 {
@@ -265,7 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         let rocketPositionInViewCoordinates = convertPoint(toView: rocketSprite.position)
-        if !self.view!.frame.contains(rocketPositionInViewCoordinates) {
+        if !self.view!.frame.contains(rocketPositionInViewCoordinates), !labelsAreVisible {
             if let date = outOfBoundsDate {
                 if date.timeIntervalSinceNow < -2 {
                     showLabels()
@@ -274,6 +283,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 outOfBoundsDate = Date()
             }
         }
+    }
+    
+    override func removeAllChildren() {
+        var childrenToRemove = [SKNode]()
+        for node in children {
+            if node.name != "background music" {
+                childrenToRemove.append(node)
+            }
+        }
+        removeChildren(in: childrenToRemove)
     }
 }
 
