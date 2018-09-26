@@ -66,9 +66,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let cheeseTexture = SKTexture(imageNamed: "cheese")
         cheeseSprite = SKSpriteNode(texture: cheeseTexture, size: CGSize(width: 60, height: 60))
         cheeseSprite.position = cheeseInitPosition
-        cheeseSprite.physicsBody = SKPhysicsBody(texture: cheeseTexture, size: cheeseSprite.size)
-        cheeseSprite.physicsBody!.isDynamic = false
-        cheeseSprite.physicsBody?.mass = 0
         cheeseSprite.name = "cheese"
         cheeseSprite.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.5),
                                                                    SKAction.resize(toWidth: 60, height: 60, duration: 0.5)])))
@@ -129,12 +126,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 destroyRocket(at: contact.contactPoint)
             } else if contact.bodyA.node?.name == "planet", contact.bodyB.node?.name == "rocket"{
                 destroyRocket(at: contact.contactPoint)
-            }
-            
-            if contact.bodyA.node?.name == "rocket", contact.bodyB.node?.name == "cheese"{
-                haveGrabbedTheCheese()
-            } else if contact.bodyA.node?.name == "cheese", contact.bodyB.node?.name == "rocket"{
-                haveGrabbedTheCheese()
             }
         }
 
@@ -197,8 +188,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         setupRocket()
         setupPlanet()
-        setupCheese()
         setupGravity()
+        setupCheese()
         setupLabels()
         if !backgroundMusicIsPlaying {
             setupBackgroundMusic()
@@ -226,6 +217,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func haveGrabbedTheCheese() {
+        cheeseInitPosition = CGPoint(x: 0, y: 0)
         backgroundMusic.removeFromParent()
         cheeseSprite.removeFromParent()
         playMariachiMusic()
@@ -273,6 +265,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             rocketSprite.zRotation = angle
         }
         
+        if CGPoint.distance(pointA: rocketSprite.position, pointB: cheeseInitPosition) < 40 {
+            haveGrabbedTheCheese()
+        }
+        
         let rocketPositionInViewCoordinates = convertPoint(toView: rocketSprite.position)
         if !self.view!.frame.contains(rocketPositionInViewCoordinates), !labelsAreVisible {
             if let date = outOfBoundsDate {
@@ -307,11 +303,19 @@ extension CGFloat {
         return Swift.abs(self)
     }
 }
+
 extension CGPoint {
     static func random(minX: CGFloat, maxX: CGFloat, minY: CGFloat, maxY: CGFloat) -> CGPoint {
         let randomX = CGFloat.random(in: minX..<maxX)
         let randomY = CGFloat.random(in: minY..<maxY)
         return CGPoint(x: randomX, y: randomY)
+    }
+    
+    static func distance(pointA: CGPoint, pointB: CGPoint) -> CGFloat {
+        let xDistance = pointA.x - pointB.x
+        let yDistance = pointA.y - pointB.y
+        let squaredSum = pow(xDistance, 2) + pow(yDistance, 2)
+        return sqrt(squaredSum)
     }
 }
 
